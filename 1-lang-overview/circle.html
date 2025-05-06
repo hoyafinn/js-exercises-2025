@@ -52,15 +52,25 @@
         console.log("---------------------")
         console.log("PART 1...")
 
-
-
-
+        const calculateCircleArea = (radius) => {
+            return Math.PI * Math.pow(radius, 2);
+        }
+        const radius = 9;
+        const area = calculateCircleArea(radius);
+        console.log("Radius: " + radius);
+        console.log("Area: " + area);
 
         console.log("---------------------")
         console.log("PART 2...")
 
-
-
+        const inputRadius = document.getElementById("input-radius");
+        const displayArea = document.getElementById("display-area");
+        const button = document.getElementById("calculate");
+        button.addEventListener("click", () => {
+            const radius = parseFloat(inputRadius.value);
+            const area = calculateCircleArea(radius);
+            displayArea.innerText = area;
+        });
 
 
     </script>

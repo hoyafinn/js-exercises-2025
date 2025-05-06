@@ -84,21 +84,49 @@
             console.log("PART 1...")
 
 
-
-
+            console.log("Number of products:", products.length)
+            products.forEach(function(product) {
+                product.price = parseFloat(product.price)
+            })
+            products.forEach(function(product) {
+                console.log("Name:", product.name, "Price:", formatUSD(product.price))
+            })
+            var departments = []
+            products.forEach(function(product) {
+                if (!departments.includes(product.department)) {
+                    departments.push(product.department)
+                }
+            })
+            console.log("Number of unique departments:", departments.length)
+            departments.forEach(function(department) {
+                console.log("Department:", department.toUpperCase())
+            })
+            var beverages = products.filter(function(product) {
+                return product.department === "beverages"
+            })
+            console.log("Number of beverage products:", beverages.length)
+            var totalBeveragePrice = 0
+            beverages.forEach(function(product) {
+                totalBeveragePrice += product.price
+            })
+            var averageBeveragePrice = totalBeveragePrice / beverages.length
+            console.log("Average price of beverages:", formatUSD(averageBeveragePrice))
 
 
             console.log("---------------------")
             console.log("PART 2...")
 
 
-
-
-
-
-
-
-
+            products.sort(function(a, b) {
+                return a.name.localeCompare(b.name)
+            })
+            var displayGroceries = document.getElementById("display-groceries")
+            products.forEach(function(product) {
+                var listItem = document.createElement("li")
+                listItem.innerText = `${product.name} (${formatUSD(product.price)})`
+                displayGroceries.appendChild(listItem)
+            })
+            console.log("Sorted products displayed in the list.")
 
             }).catch(function(error) {
                 console.error("ERROR:", error)

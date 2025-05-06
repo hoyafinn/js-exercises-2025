@@ -58,22 +58,89 @@
         console.log("---------------------")
         console.log("PART 1...")
 
-
-
-
-
+        let initialBalance = 150000
+        let targetBalance = 1000000
+        let rate = 0.08
+        let years = 0
+        let balance = initialBalance
+        while (balance < targetBalance) {
+            balance += balance * rate
+            years++
+        }
+        console.log("Initial balance: " + formatUSD(initialBalance))
+        console.log("Years: " + years)
+        console.log("Ending balance: " + formatUSD(balance))
+        console.log("Rate: " + (rate * 100) + "%")
 
         console.log("---------------------")
         console.log("PART 2...")
 
-
-
-
-
+        const normal = d3.randomNormal(0.08, 0.15)
+        initialBalance = 150000
+        targetBalance = 1000000
+        years = 0
+        balance = initialBalance
+        let rateList = []
+        while (balance < targetBalance) {
+            let rate = normal()
+            rateList.push(rate)
+            balance += balance * rate
+            years++
+        }
+        console.log("Initial balance: " + formatUSD(initialBalance))
+        console.log("Years: " + years)
+        console.log("Ending balance: " + formatUSD(balance))
+        console.log("Rate list: " + rateList.map(r => (r * 100).toFixed(2) + "%").join(", "))
 
         console.log("---------------------")
         console.log("PART 3...")
 
+        const form = document.createElement("form")
+        form.innerHTML = `
+            <label for="initialBalance">Initial Balance:</label>
+            <input type="number" id="initialBalance" value="150000" required>
+            <br>
+            <label for="targetBalance">Target Balance:</label>
+            <input type="number" id="targetBalance" value="1000000" required>
+            <br>
+            <label for="mean">Mean Return Rate:</label>
+            <input type="number" id="mean" value="0.08" step="0.01" required>
+            <br>
+            <label for="stdDev">Standard Deviation:</label>
+            <input type="number" id="stdDev" value="0.15" step="0.01" required>
+            <br>
+            <button type="submit">Run Simulation</button>
+        `
+        document.body.appendChild(form)
+        const resultDiv = document.createElement("div")
+        resultDiv.id = "result"
+        document.body.appendChild(resultDiv)
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault()
+            const initialBalance = parseFloat(document.getElementById("initialBalance").value)
+            const targetBalance = parseFloat(document.getElementById("targetBalance").value)
+            const mean = parseFloat(document.getElementById("mean").value)
+            const stdDev = parseFloat(document.getElementById("stdDev").value)
+
+            const normal = d3.randomNormal(mean, stdDev)
+            let years = 0
+            let balance = initialBalance
+            let rateList = []
+            while (balance < targetBalance) {
+                let rate = normal()
+                rateList.push(rate)
+                balance += balance * rate
+                years++
+            }
+            resultDiv.innerHTML = `
+                <h3>Simulation Result</h3>
+                <p>Initial Balance: ${formatUSD(initialBalance)}</p>
+                <p>Years: ${years}</p>
+                <p>Ending Balance: ${formatUSD(balance)}</p>
+                <p>Rate List: ${rateList.map(r => (r * 100).toFixed(2) + "%").join(", ")}</p>
+            `
+        })
 
 
 

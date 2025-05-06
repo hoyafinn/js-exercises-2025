@@ -92,13 +92,41 @@
             console.log("---------------------")
             console.log("PART 1...")
 
+            console.log("requestURL:", requestUrl)
+            console.log("Number of markets:", data.markets.length)
 
-
-
+            var equityMarkets = data.markets.filter(function(market) {
+                return market.market_type === "Equity"
+            })
+            console.log("Number of equity markets:", equityMarkets.length)
+            equityMarkets.forEach(function(market) {
+                console.log("Market Type:", market.market_type)
+                console.log("Region:", market.region)
+            })
+            var market = equityMarkets.find(function(market) {
+                return market.region === "United States"
+            })
+            console.log("US Market Type:", market.market_type)
+            console.log("US Market Primary Exchanges:", market.primary_exchanges)
+            console.log("US Market Local Open:", market.local_open)
+            console.log("US Market Local Close:", market.local_close)
+            console.log("US Market Current Status:", market.current_status.toUpperCase())
 
             console.log("---------------------")
             console.log("PART 2...")
 
+            var displayRegion = document.getElementById("display-region")
+            var displayType = document.getElementById("display-type")
+            var displayExchanges = document.getElementById("display-exchanges")
+            var displayOpen = document.getElementById("display-open")
+            var displayClose = document.getElementById("display-close")
+            var displayStatus = document.getElementById("display-status")
+            displayRegion.innerText = market.region
+            displayType.innerText = market.market_type
+            displayExchanges.innerText = market.primary_exchanges
+            displayOpen.innerText = market.local_open
+            displayClose.innerText = market.local_close
+            displayStatus.innerText = market.current_status.toUpperCase()
 
 
 
